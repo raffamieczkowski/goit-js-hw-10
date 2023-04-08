@@ -14,7 +14,11 @@ const fetchCountryData = debounce((searchValue) => {
   fetch(url)
     .then((response) => {
       if (!response.ok) {
-        throw new Error('No results found');
+        if (response.status === 404) {
+          throw new Error('404');
+        } else {
+          throw new Error('No results found');
+        }
       }
       return response.json();
     })
@@ -76,6 +80,6 @@ input.addEventListener('input', (event) => {
   } else {
     // Clear previous search results if search box is empty
     countryList.innerHTML = '';
-    countryInfo.innerHTML = '';
+    countryInfo.innerHTML = ''; 
   }
 });

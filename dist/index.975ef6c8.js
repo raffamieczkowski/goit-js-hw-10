@@ -517,7 +517,10 @@ const baseUrl = "https://restcountries.com/v3.1/name/";
 const fetchCountryData = (0, _lodashDebounceDefault.default)((searchValue)=>{
     const url = `${baseUrl}${searchValue}`;
     fetch(url).then((response)=>{
-        if (!response.ok) throw new Error("No results found");
+        if (!response.ok) {
+            if (response.status === 404) throw new Error("404");
+            else throw new Error("No results found");
+        }
         return response.json();
     }).then((data)=>{
         // Clear previous search results
