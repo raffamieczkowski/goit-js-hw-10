@@ -1,5 +1,6 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
+import Notiflix from 'notiflix';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -22,8 +23,9 @@ const fetchCountryData = debounce((searchValue) => {
       countryList.innerHTML = '';
       countryInfo.innerHTML = '';
 
-      // If there are multiple results, show a list of countries
-      if (data.length > 1) {
+      if (data.length > 10) {
+        Notiflix.Notify.warning('Too many matches found. Please enter a more specific name.');
+      } else if (data.length > 1 && data.length <= 10) {
         data.forEach((country) => {
           const countryElement = document.createElement('li');
           countryElement.textContent = country.name.common;
@@ -43,10 +45,16 @@ const fetchCountryData = debounce((searchValue) => {
       } else if (data.length === 1) {
         // If there is only one result, show detailed information about the country
         showCountryInfo(data[0]);
+      } else {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
       }
     })
     .catch((error) => {
-      console.error(error.message);
+      if (error.message.includes('404')) {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+      } else {
+        console.error(error.message);
+      }
     });
 }, DEBOUNCE_DELAY);
 
