@@ -23,7 +23,6 @@ const fetchCountryData = debounce((searchValue) => {
       return response.json();
     })
     .then((data) => {
-      // Clear previous search results
       countryList.innerHTML = '';
       countryInfo.innerHTML = '';
 
@@ -40,14 +39,11 @@ const fetchCountryData = debounce((searchValue) => {
 
           countryElement.prepend(flagElement);
           countryList.appendChild(countryElement);
-
-          // Add click event to show details about the country
           countryElement.addEventListener('click', () => {
             showCountryInfo(country);
           });
         });
       } else if (data.length === 1) {
-        // If there is only one result, show detailed information about the country
         showCountryInfo(data[0]);
       } else {
         Notiflix.Notify.failure('Oops, there is no country with that name');
@@ -78,7 +74,6 @@ input.addEventListener('input', (event) => {
   if (searchValue.length >= 2) {
     fetchCountryData(searchValue);
   } else {
-    // Clear previous search results if search box is empty
     countryList.innerHTML = '';
     countryInfo.innerHTML = ''; 
   }
