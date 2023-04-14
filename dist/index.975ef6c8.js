@@ -523,7 +523,6 @@ const fetchCountryData = (0, _lodashDebounceDefault.default)((searchValue)=>{
         }
         return response.json();
     }).then((data)=>{
-        // Clear previous search results
         countryList.innerHTML = "";
         countryInfo.innerHTML = "";
         if (data.length > 10) (0, _notiflixDefault.default).Notify.warning("Too many matches found. Please enter a more specific name.");
@@ -535,13 +534,11 @@ const fetchCountryData = (0, _lodashDebounceDefault.default)((searchValue)=>{
             flagElement.alt = `Flag of ${country.name.common}`;
             countryElement.prepend(flagElement);
             countryList.appendChild(countryElement);
-            // Add click event to show details about the country
             countryElement.addEventListener("click", ()=>{
                 showCountryInfo(country);
             });
         });
-        else if (data.length === 1) // If there is only one result, show detailed information about the country
-        showCountryInfo(data[0]);
+        else if (data.length === 1) showCountryInfo(data[0]);
         else (0, _notiflixDefault.default).Notify.failure("Oops, there is no country with that name");
     }).catch((error)=>{
         if (error.message.includes("404")) (0, _notiflixDefault.default).Notify.failure("Oops, there is no country with that name");
@@ -562,43 +559,12 @@ input.addEventListener("input", (event)=>{
     const searchValue = event.target.value.trim();
     if (searchValue.length >= 2) fetchCountryData(searchValue);
     else {
-        // Clear previous search results if search box is empty
         countryList.innerHTML = "";
         countryInfo.innerHTML = "";
     }
 });
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./css/styles.css":"1CY4s","lodash.debounce":"3JP5n","notiflix":"5z0Oc"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"1CY4s":[function() {},{}],"3JP5n":[function(require,module,exports) {
+},{"./css/styles.css":"1CY4s","lodash.debounce":"3JP5n","notiflix":"5z0Oc","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1CY4s":[function() {},{}],"3JP5n":[function(require,module,exports) {
 var global = arguments[3];
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -1641,6 +1607,36 @@ var global = arguments[3];
         Block: G.Block
     };
 });
+
+},{}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
 },{}]},["1RB6v","8lqZg"], "8lqZg", "parcelRequired7c6")
 
